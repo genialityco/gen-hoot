@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useSession } from '../../SessionContext';
 
@@ -20,13 +20,20 @@ const CONFETTI_PIECES = Array.from({ length: 40 }, (_, i) => ({
   height: `${6 + Math.random() * 8}px`,
 }));
 
+const AUTO_NEXT_DELAY = 6; // seconds
+
 export default function HostLeaderboardScreen({ isFinal }) {
   const {
     leaderboard, questions, currentQuestionIndex, sessionState,
-    nextQuestion, finishQuiz, resetSession, loading,
+    nextQuestion, finishQuiz, resetSession, loading, sessionMode,
   } = useSession();
 
   const [showConfetti, setShowConfetti] = useState(isFinal);
+  const isAuto = sessionMode === 'auto';
+  const isLast = currentQuestionIndex >= questions.length - 1;
+  const [countdown, setCountdown] = useState(AUTO_NEXT_DELAY);
+  const autoRef = useRef(null);
+  const intervalRef = useRef(null);
 
   useEffect(() => {
     if (!isFinal) return;
@@ -34,12 +41,30 @@ export default function HostLeaderboardScreen({ isFinal }) {
     return () => clearTimeout(t);
   }, [isFinal]);
 
-  const isLast = currentQuestionIndex >= questions.length - 1;
+  useEffect(() => {
+    if (!isAuto || isFinal) return;
+    setCountdown(AUTO_NEXT_DELAY);
+    intervalRef.current = setInterval(() => {
+      setCountdown((c) => {
+        if (c <= 1) { clearInterval(intervalRef.current); return 0; }
+        return c - 1;
+      });
+    }, 1000);
+    autoRef.current = setTimeout(() => {
+      if (isLast) finishQuiz();
+      else nextQuestion();
+    }, AUTO_NEXT_DELAY * 1000);
+    return () => {
+      clearInterval(intervalRef.current);
+      clearTimeout(autoRef.current);
+    };
+  }, [isAuto, isFinal, isLast, finishQuiz, nextQuestion]);
 
   function handleAdvance() {
-    if (isLast || isFinal) {
-      if (isFinal) resetSession();
-      else finishQuiz();
+    if (isFinal) {
+      resetSession();
+    } else if (isLast) {
+      finishQuiz();
     } else {
       nextQuestion();
     }
@@ -146,8 +171,8 @@ export default function HostLeaderboardScreen({ isFinal }) {
           {isFinal
             ? '🔄 Nueva sesión'
             : isLast
-            ? '🏁 Ver resultado final'
-            : `➡️ Siguiente pregunta (${currentQuestionIndex + 2}/${questions.length})`}
+            ? `🏁 Ver resultado final${isAuto ? ` (${countdown}s)` : ''}`
+            : `➡️ Siguiente pregunta (${currentQuestionIndex + 2}/${questions.length})${isAuto ? ` (${countdown}s)` : ''}`}
         </button>
       </motion.div>
     </div>

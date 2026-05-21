@@ -1,14 +1,41 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useSession } from '../../SessionContext';
 
 const OPTION_LABELS = ['A', 'B', 'C', 'D'];
 const OPTION_COLORS = ['bg-red-500', 'bg-blue-500', 'bg-amber-500', 'bg-green-500'];
 
+const AUTO_LEADERBOARD_DELAY = 4; // seconds
+
 export default function HostAnswerResultScreen() {
   const {
-    currentQuestion, currentQuestionIndex, sessionState, players, showLeaderboard, cancelSession,
+    currentQuestion, currentQuestionIndex, sessionState, players,
+    showLeaderboard, cancelSession, sessionMode,
   } = useSession();
+
+  const isAuto = sessionMode === 'auto';
+  const [countdown, setCountdown] = useState(AUTO_LEADERBOARD_DELAY);
+  const autoRef = useRef(null);
+  const intervalRef = useRef(null);
+
+  useEffect(() => {
+    if (!isAuto) return;
+    setCountdown(AUTO_LEADERBOARD_DELAY);
+    intervalRef.current = setInterval(() => {
+      setCountdown((c) => {
+        if (c <= 1) {
+          clearInterval(intervalRef.current);
+          return 0;
+        }
+        return c - 1;
+      });
+    }, 1000);
+    autoRef.current = setTimeout(() => showLeaderboard(), AUTO_LEADERBOARD_DELAY * 1000);
+    return () => {
+      clearInterval(intervalRef.current);
+      clearTimeout(autoRef.current);
+    };
+  }, [isAuto, showLeaderboard]);
 
   const answerCounts = useMemo(() => {
     if (!currentQuestion) return [0, 0, 0, 0];
@@ -81,7 +108,7 @@ export default function HostAnswerResultScreen() {
 
         <div className="flex gap-3">
           <button className="btn-primary flex-1 text-lg" onClick={showLeaderboard}>
-            Ver clasificación 🏆
+            {isAuto ? `Ver clasificación 🏆 (${countdown}s)` : 'Ver clasificación 🏆'}
           </button>
           <button className="btn-secondary px-4" onClick={cancelSession} title="Cancelar sesión">
             ✕

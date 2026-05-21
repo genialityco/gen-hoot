@@ -18,6 +18,7 @@ function isValid(q) {
 export default function HostSetupScreen() {
   const { createSession, loading, error } = useSession();
   const [hostName, setHostName] = useState('');
+  const [mode, setMode] = useState('manual');
   const [questions, setQuestions] = useState(defaultQuestions.map((q) => ({ ...q, options: [...q.options] })));
   const [expandedIdx, setExpandedIdx] = useState(null);
 
@@ -71,7 +72,7 @@ export default function HostSetupScreen() {
 
   async function handleCreate() {
     if (!allValid) return;
-    await createSession(hostName.trim(), questions);
+    await createSession(hostName.trim(), questions, mode);
   }
 
   const LABELS = ['A', 'B', 'C', 'D'];
@@ -89,7 +90,7 @@ export default function HostSetupScreen() {
         </div>
 
         {/* Host name */}
-        <div className="glass-card p-5 mb-6">
+        <div className="glass-card p-5 mb-4">
           <label className="text-gray-300 text-sm font-medium mb-2 block">Tu nombre (host)</label>
           <input
             className="input-field w-full"
@@ -98,6 +99,43 @@ export default function HostSetupScreen() {
             onChange={(e) => setHostName(e.target.value)}
             maxLength={30}
           />
+        </div>
+
+        {/* Mode selector */}
+        <div className="glass-card p-5 mb-6">
+          <p className="text-gray-300 text-sm font-medium mb-3">Modo de control</p>
+          <div className="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              onClick={() => setMode('manual')}
+              className={`p-4 rounded-xl border text-left transition-all ${
+                mode === 'manual'
+                  ? 'border-purple-500 bg-purple-600/20'
+                  : 'border-white/10 bg-white/5 hover:border-white/20'
+              }`}
+            >
+              <div className="text-2xl mb-1">🎛️</div>
+              <p className="text-white font-semibold text-sm">Manual</p>
+              <p className="text-gray-400 text-xs mt-1">
+                Tú controlas cada cambio de pregunta y cuándo mostrar resultados
+              </p>
+            </button>
+            <button
+              type="button"
+              onClick={() => setMode('auto')}
+              className={`p-4 rounded-xl border text-left transition-all ${
+                mode === 'auto'
+                  ? 'border-amber-500 bg-amber-600/20'
+                  : 'border-white/10 bg-white/5 hover:border-white/20'
+              }`}
+            >
+              <div className="text-2xl mb-1">⚡</div>
+              <p className="text-white font-semibold text-sm">Automático</p>
+              <p className="text-gray-400 text-xs mt-1">
+                El quiz avanza solo cuando se acaba el tiempo de cada pregunta
+              </p>
+            </button>
+          </div>
         </div>
 
         {/* Questions */}

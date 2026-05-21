@@ -8,15 +8,19 @@ const OPTION_ICONS = ['🔴', '🔵', '🟡', '🟢'];
 
 const CIRCUMFERENCE = 2 * Math.PI * 36;
 
+const AUTO_RESULT_DELAY = 2000; // ms after timer hits 0 before auto-advancing
+
 export default function HostQuestionScreen() {
   const {
     sessionState, currentQuestion, currentQuestionIndex,
-    questions, players, totalAnswers, showQuestionResults, cancelSession,
+    questions, players, totalAnswers, sessionMode, showQuestionResults, cancelSession,
   } = useSession();
 
   const [timeLeft, setTimeLeft] = useState(currentQuestion?.timeLimit || 20);
   const timerRef = useRef(null);
+  const autoRef = useRef(null);
   const startedAtRef = useRef(sessionState?.questionStartedAt);
+  const isAuto = sessionMode === 'auto';
 
   useEffect(() => {
     if (!currentQuestion || !sessionState?.questionStartedAt) return;
@@ -26,11 +30,20 @@ export default function HostQuestionScreen() {
       const elapsed = (Date.now() - startedAtRef.current) / 1000;
       const remaining = Math.max(0, currentQuestion.timeLimit - elapsed);
       setTimeLeft(Math.ceil(remaining));
-      if (remaining <= 0) clearInterval(timerRef.current);
+      if (remaining <= 0) {
+        clearInterval(timerRef.current);
+        if (isAuto && !autoRef.current) {
+          autoRef.current = setTimeout(() => showQuestionResults(), AUTO_RESULT_DELAY);
+        }
+      }
     }, 200);
 
-    return () => clearInterval(timerRef.current);
-  }, [currentQuestion, sessionState?.questionStartedAt]);
+    return () => {
+      clearInterval(timerRef.current);
+      clearTimeout(autoRef.current);
+      autoRef.current = null;
+    };
+  }, [currentQuestion, sessionState?.questionStartedAt, isAuto, showQuestionResults]);
 
   if (!currentQuestion) return null;
 

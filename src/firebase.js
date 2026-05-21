@@ -37,7 +37,7 @@ function questionsArrayToObject(questions) {
 
 // ── Session management ──────────────────────────────────────────────────────
 
-export async function createSession(hostName, questions) {
+export async function createSession(hostName, questions, mode = 'manual') {
   const code = generateCode();
   const hostId = generateHostId();
 
@@ -45,6 +45,7 @@ export async function createSession(hostName, questions) {
     code,
     hostId,
     hostName,
+    mode,
     phase: 'lobby',
     currentQuestionIndex: 0,
     questionStartedAt: null,

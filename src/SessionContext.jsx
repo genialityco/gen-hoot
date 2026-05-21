@@ -69,6 +69,7 @@ export function SessionProvider({ children }) {
 
   // ── Derived state ──────────────────────────────────────────────────────────
   const phase = sessionState?.phase || 'lobby';
+  const sessionMode = sessionState?.mode || 'manual';
   const currentQuestionIndex = sessionState?.currentQuestionIndex ?? 0;
   const questions = sessionState?.questions
     ? Object.values(sessionState.questions)
@@ -86,11 +87,11 @@ export function SessionProvider({ children }) {
     : 0;
 
   // ── Actions ───────────────────────────────────────────────────────────────
-  const handleCreateSession = useCallback(async (hostName, questionsList) => {
+  const handleCreateSession = useCallback(async (hostName, questionsList, mode) => {
     setLoading(true);
     setError(null);
     try {
-      const { code, hostId: hid } = await createSession(hostName, questionsList);
+      const { code, hostId: hid } = await createSession(hostName, questionsList, mode);
       setSessionCode(code);
       setHostId(hid);
       setIsHost(true);
@@ -197,7 +198,7 @@ export function SessionProvider({ children }) {
     // Raw state
     sessionState,
     // Derived
-    phase, currentQuestionIndex, questions, currentQuestion,
+    phase, sessionMode, currentQuestionIndex, questions, currentQuestion,
     players, leaderboard, myAnswer, myScore, myRank, totalAnswers,
     // Status
     error, loading, setError,
