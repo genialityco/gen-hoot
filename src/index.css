@@ -1,0 +1,375 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #7c3aed;
+  --color-primary-light: #a78bfa;
+  --color-primary-dark: #5b21b6;
+  --color-secondary: #f59e0b;
+  --color-secondary-light: #fbbf24;
+  --color-accent: #ec4899;
+  --color-accent-light: #f472b6;
+  --color-surface: #1e1b4b;
+  --color-surface-light: #312e81;
+  --color-surface-lighter: #3730a3;
+  --color-background: #0f0a2a;
+  --color-success: #10b981;
+  --color-danger: #ef4444;
+  --color-warning: #f59e0b;
+  --font-display: 'Outfit', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--color-background);
+    color: #e2e8f0;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(245, 158, 11, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #root {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(30, 27, 75, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 1.25rem;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-card-glow {
+    background: rgba(30, 27, 75, 0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    border-radius: 1.25rem;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 0 60px rgba(124, 58, 237, 0.1),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+    color: white;
+    font-weight: 700;
+    padding: 0.875rem 2rem;
+    border-radius: 0.875rem;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .btn-primary:hover::before {
+    opacity: 1;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .btn-secondary {
+    background: rgba(124, 58, 237, 0.15);
+    color: var(--color-primary-light);
+    font-weight: 600;
+    padding: 0.875rem 2rem;
+    border-radius: 0.875rem;
+    border: 1px solid rgba(124, 58, 237, 0.3);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .btn-secondary:hover {
+    background: rgba(124, 58, 237, 0.25);
+    border-color: rgba(124, 58, 237, 0.5);
+    transform: translateY(-1px);
+  }
+
+  .input-field {
+    background: rgba(15, 10, 42, 0.6);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+    border-radius: 0.875rem;
+    padding: 0.875rem 1.25rem;
+    color: #e2e8f0;
+    font-size: 1rem;
+    width: 100%;
+    transition: all 0.3s;
+    outline: none;
+    font-family: var(--font-body);
+  }
+
+  .input-field::placeholder {
+    color: rgba(148, 163, 184, 0.5);
+  }
+
+  .input-field:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.15);
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .badge-saboteur {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+
+  .badge-builder {
+    background: rgba(16, 185, 129, 0.2);
+    color: #6ee7b7;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+  }
+
+  .timer-ring {
+    position: relative;
+    width: 5rem;
+    height: 5rem;
+  }
+
+  .timer-ring svg {
+    transform: rotate(-90deg);
+    width: 100%;
+    height: 100%;
+  }
+
+  .timer-ring .timer-bg {
+    fill: none;
+    stroke: rgba(124, 58, 237, 0.15);
+    stroke-width: 4;
+  }
+
+  .timer-ring .timer-progress {
+    fill: none;
+    stroke: var(--color-secondary);
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+  }
+
+  .timer-ring .timer-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-family: var(--font-display);
+    color: var(--color-secondary-light);
+  }
+
+  .proposal-card {
+    background: rgba(49, 46, 129, 0.4);
+    border: 1px solid rgba(124, 58, 237, 0.15);
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .proposal-card:hover {
+    border-color: rgba(124, 58, 237, 0.4);
+    background: rgba(49, 46, 129, 0.6);
+    transform: translateY(-2px);
+  }
+
+  .proposal-card.selected {
+    border-color: var(--color-secondary);
+    background: rgba(245, 158, 11, 0.1);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.15);
+  }
+
+  .proposal-card.won {
+    border-color: var(--color-success);
+    background: rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+  }
+
+  .player-avatar {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    color: white;
+  }
+
+  /* ── Kahoot answer buttons ───────────────────────────────── */
+  .answer-btn-a,
+  .answer-btn-b,
+  .answer-btn-c,
+  .answer-btn-d {
+    border: none;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s, opacity 0.2s;
+    color: white;
+    font-family: var(--font-body);
+  }
+
+  .answer-btn-a:hover:not(:disabled),
+  .answer-btn-b:hover:not(:disabled),
+  .answer-btn-c:hover:not(:disabled),
+  .answer-btn-d:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  .answer-btn-a { background: linear-gradient(135deg, #c62828, #ef4444); }
+  .answer-btn-b { background: linear-gradient(135deg, #1565c0, #3b82f6); }
+  .answer-btn-c { background: linear-gradient(135deg, #e65100, #f59e0b); }
+  .answer-btn-d { background: linear-gradient(135deg, #2e7d32, #10b981); }
+
+  .answer-btn-selected {
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.6), 0 4px 20px rgba(0,0,0,0.3);
+    transform: scale(1.02);
+  }
+
+  .answer-btn-correct {
+    background: linear-gradient(135deg, #10b981, #059669) !important;
+    box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+  }
+
+  .answer-btn-wrong {
+    background: rgba(239, 68, 68, 0.2) !important;
+    border: 1px solid rgba(239, 68, 68, 0.4) !important;
+    opacity: 0.6;
+  }
+
+  /* ── Leaderboard ranks ───────────────────────────────────── */
+  .rank-gold   { background: linear-gradient(135deg, #f59e0b, #fbbf24); color: #000; font-weight: 700; }
+  .rank-silver { background: linear-gradient(135deg, #94a3b8, #cbd5e1); color: #000; font-weight: 700; }
+  .rank-bronze { background: linear-gradient(135deg, #92400e, #b45309); color: #fff; font-weight: 700; }
+
+  /* ── QR code container ───────────────────────────────────── */
+  .qr-container {
+    background: white;
+    padding: 1rem;
+    border-radius: 1rem;
+    display: inline-block;
+    line-height: 0;
+  }
+
+  /* ── Answer distribution bars ────────────────────────────── */
+  .answer-bar {
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    padding: 0 0.75rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: white;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    min-width: 0;
+    white-space: nowrap;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.2); }
+  50% { box-shadow: 0 0 40px rgba(124, 58, 237, 0.4); }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out;
+}
+
+@keyframes timer-urgent {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.timer-urgent {
+  animation: timer-urgent 0.5s ease-in-out infinite;
+}

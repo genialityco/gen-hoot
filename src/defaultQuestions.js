@@ -1,0 +1,51 @@
+export const defaultQuestions = [
+  {
+    text: '¿Cuál es el planeta más grande del sistema solar?',
+    options: ['Saturno', 'Júpiter', 'Urano', 'Neptuno'],
+    correctIndex: 1,
+    timeLimit: 20,
+    points: 1000,
+  },
+  {
+    text: '¿En qué año llegó el ser humano a la Luna por primera vez?',
+    options: ['1965', '1972', '1969', '1971'],
+    correctIndex: 2,
+    timeLimit: 20,
+    points: 1000,
+  },
+  {
+    text: '¿Cuántos lados tiene un hexágono?',
+    options: ['5', '7', '8', '6'],
+    correctIndex: 3,
+    timeLimit: 15,
+    points: 1000,
+  },
+  {
+    text: '¿Cuál es el océano más grande del mundo?',
+    options: ['Atlántico', 'Índico', 'Ártico', 'Pacífico'],
+    correctIndex: 3,
+    timeLimit: 20,
+    points: 1000,
+  },
+  {
+    text: '¿Cuántos huesos tiene el cuerpo humano adulto?',
+    options: ['206', '189', '215', '198'],
+    correctIndex: 0,
+    timeLimit: 25,
+    points: 1000,
+  },
+  {
+    text: '¿Cuál es el elemento químico con símbolo "Au"?',
+    options: ['Plata', 'Aluminio', 'Oro', 'Cobre'],
+    correctIndex: 2,
+    timeLimit: 20,
+    points: 1000,
+  },
+  {
+    text: '¿Cuántos colores tiene el arcoíris?',
+    options: ['5', '6', '8', '7'],
+    correctIndex: 3,
+    timeLimit: 15,
+    points: 1000,
+  },
+];

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"d:\\\\gen.iality\\\\Proyectos\\\\experiencias\\\\gen-hoot\" -File)",
+      "Bash(Select-Object Name)",
+      "Bash(ls -la \"d:\\\\gen.iality\\\\Proyectos\\\\experiencias\\\\gen-hoot\\\\\" | grep -E \"^\\\\.\" | head -20)",
+      "Read(//d/gen.iality/Proyectos/experiencias/**)",
+      "Bash(ls -1 \"d:\\\\gen.iality\\\\Proyectos\\\\experiencias\\\\gen-hoot\\\\\")",
+      "Bash(xargs cat)"
+    ]
+  }
+}
