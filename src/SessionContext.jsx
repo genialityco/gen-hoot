@@ -48,10 +48,22 @@ export function SessionProvider({ children }) {
     }
   }, [sessionCode, playerId, isHost, hostId]);
 
-  // Subscribe to Firebase
+  // Subscribe to Firebase — auto-clear state if session is deleted externally
   useEffect(() => {
     if (!sessionCode) return;
-    const unsub = subscribeToSession(sessionCode, (data) => setSessionState(data));
+    const unsub = subscribeToSession(sessionCode, (data) => {
+      if (data === null) {
+        Object.values(STORAGE_KEYS).forEach((k) => sessionStorage.removeItem(k));
+        setSessionCode(null);
+        setPlayerId(null);
+        setHostId(null);
+        setIsHost(false);
+        setSessionState(null);
+        setError(null);
+      } else {
+        setSessionState(data);
+      }
+    });
     return () => unsub();
   }, [sessionCode]);
 
@@ -165,7 +177,7 @@ export function SessionProvider({ children }) {
     setSessionState(null);
     setError(null);
     if (code) {
-      try { await deleteSession(code); } catch (_) { /* session already gone */ }
+      try { await deleteSession(code); } catch { /* session already gone */ }
     }
   }, [sessionCode]);
 

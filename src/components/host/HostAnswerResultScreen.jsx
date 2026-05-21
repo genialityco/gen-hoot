@@ -79,9 +79,14 @@ export default function HostAnswerResultScreen() {
           })}
         </div>
 
-        <button className="btn-primary w-full text-lg" onClick={showLeaderboard}>
-          Ver clasificación 🏆
-        </button>
+        <div className="flex gap-3">
+          <button className="btn-primary flex-1 text-lg" onClick={showLeaderboard}>
+            Ver clasificación 🏆
+          </button>
+          <button className="btn-secondary px-4" onClick={cancelSession} title="Cancelar sesión">
+            ✕
+          </button>
+        </div>
       </motion.div>
     </div>
   );
