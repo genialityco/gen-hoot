@@ -35,10 +35,10 @@ export default function RegistrationScreen() {
   }
 
   return (
-    <div className="h-screen overflow-hidden flex flex-col p-4 gap-3">
+    <div className="h-screen overflow-hidden flex flex-col p-3 gap-2">
       {/* Top logo */}
       <div className="flex justify-center flex-shrink-0">
-        <img src="/LOGO_QQSM.png" alt="QQSM" className="h-32 w-auto object-contain" />
+        <img src="/LOGO_QQSM.png" alt="QQSM" className="h-16 w-auto object-contain" />
       </div>
 
       {/* Form card centrada verticalmente */}
@@ -48,9 +48,9 @@ export default function RegistrationScreen() {
         animate={{ opacity: 1, y: 0 }}
         className="glass-card-glow w-full max-w-md landscape:max-w-2xl"
       >
-        <div className="p-6 landscape:grid landscape:grid-cols-2 landscape:gap-6 landscape:items-center">
+        <div className="p-4 landscape:grid landscape:grid-cols-2 landscape:gap-6 landscape:items-center">
           {/* Header */}
-          <div className="text-center landscape:text-center landscape:border-r landscape:border-white/10 landscape:pr-6 mb-5 landscape:mb-0 landscape:py-2">
+          <div className="text-center landscape:text-center landscape:border-r landscape:border-white/10 landscape:pr-6 mb-3 landscape:mb-0 landscape:py-2">
             <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>
               Únete al quiz
             </h1>
@@ -58,7 +58,7 @@ export default function RegistrationScreen() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-2.5">
             <div>
               <label className="text-gray-300 text-sm font-medium mb-1 block">Nombre</label>
               <input
@@ -113,7 +113,7 @@ export default function RegistrationScreen() {
 
       {/* Bottom logo */}
       <div className="flex justify-center flex-shrink-0">
-        <img src="/LogoFondo_Transparente_Blanco.png" alt="Gen Hoot" className="h-20 w-auto object-contain opacity-90" />
+        <img src="/LogoFondo_Transparente_Blanco.png" alt="Gen Hoot" className="h-10 w-auto object-contain opacity-90" />
       </div>
     </div>
   );

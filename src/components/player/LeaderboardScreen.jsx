@@ -96,7 +96,7 @@ export default function LeaderboardScreen({ isFinal }) {
       {/* Content: portrait stacked, landscape side-by-side */}
       <div className="flex-1 flex flex-col landscape:flex-row gap-3 min-h-0">
       {/* Portrait: stacked — Landscape: left col */}
-      <div className="flex flex-col gap-3 landscape:w-2/5 landscape:min-h-0 flex-shrink-0 landscape:flex-shrink-0">
+      <div className="flex-1 min-h-0 flex flex-col gap-3 landscape:flex-none landscape:w-2/5">
         <div className="text-center flex-shrink-0">
           <div className="text-3xl mb-1">{isFinal ? '🏆' : '📊'}</div>
           <h2 className="text-xl font-bold text-white" style={{ fontFamily: 'var(--font-display)' }}>

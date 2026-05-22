@@ -40,7 +40,8 @@ export default function QuestionScreen() {
     }, 200);
 
     return () => clearInterval(timerRef.current);
-  }, [currentQuestion, sessionState?.questionStartedAt]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentQuestionIndex, sessionState?.questionStartedAt]);
 
   const askAudienceUsed = !!myLifelines?.askAudience;
 

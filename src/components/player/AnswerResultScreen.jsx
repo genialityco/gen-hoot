@@ -35,7 +35,7 @@ export default function AnswerResultScreen() {
       initial={{ opacity: 0, scale: 0.7 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-      className={`glass-card-glow p-6 text-center flex-shrink-0 ${
+      className={`glass-card-glow p-4 text-center flex-shrink-0 ${
         isCorrect ? 'border-green-500/50' : 'border-red-500/30'
       }`}
     >
@@ -43,7 +43,7 @@ export default function AnswerResultScreen() {
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ delay: 0.2, type: 'spring', stiffness: 400 }}
-        className="text-5xl mb-2"
+        className="text-4xl mb-1"
       >
         {isCorrect ? '✅' : '❌'}
       </motion.div>
@@ -149,7 +149,7 @@ export default function AnswerResultScreen() {
       {/* Content: portrait stacked, landscape side-by-side */}
       <div className="flex-1 flex flex-col landscape:flex-row gap-3 min-h-0">
         {/* Portrait: stacked — Landscape: left col */}
-        <div className="flex flex-col gap-3 landscape:w-2/5 landscape:min-h-0 flex-shrink-0 landscape:flex-shrink-0">
+        <div className="flex-1 min-h-0 flex flex-col gap-3 landscape:flex-none landscape:w-2/5">
           {resultCardEl}
           {scoreBarEl}
           {/* Leaderboard in portrait */}
