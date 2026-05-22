@@ -179,6 +179,18 @@ export async function getAudienceAnswers(code, questionIndex, optionCount) {
   return counts;
 }
 
+export function subscribeToAudienceAnswers(code, questionIndex, optionCount, callback) {
+  const answersRef = ref(db, `sessions/${code}/answers/${questionIndex}`);
+  return onValue(answersRef, (snap) => {
+    const answers = snap.val() || {};
+    const counts = Array(optionCount).fill(0);
+    Object.values(answers).forEach(({ answerIndex }) => {
+      if (answerIndex >= 0 && answerIndex < optionCount) counts[answerIndex]++;
+    });
+    callback(counts);
+  });
+}
+
 // ── Player answer ─────────────────────────────────────────────────────────────
 
 export async function submitAnswer(code, playerId, questionIndex, answerIndex) {

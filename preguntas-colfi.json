@@ -1,0 +1,254 @@
+[
+  {
+    "text": "¿En qué fecha fue creado COLFI?",
+    "options": ["23 de mayo de 2011", "30 de abril de 2011", "15 de julio de 2011", "24 de febrero de 2011"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Con cuántos colegiados fundadores inició COLFI?",
+    "options": ["150", "500", "360", "1.000"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué ministerio delegó las funciones públicas a COLFI en 2015?",
+    "options": ["Ministerio de Educación", "Ministerio del Deporte", "Ministerio del Trabajo", "Ministerio de Salud y Protección Social"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué documento expide COLFI como identificación única de los fisioterapeutas?",
+    "options": ["Carné institucional", "Tarjeta profesional", "Diploma profesional", "Certificado laboral"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿En qué ciudad se realizó el Primer Congreso Nacional de Fisioterapia organizado por las cuatro organizaciones gremiales?",
+    "options": ["Cali", "Medellín", "Bogotá", "Barranquilla"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué certificación recibió COLFI en 2017?",
+    "options": ["ISO 14001", "ISO 9001", "ISO 27001", "OHSAS 18001"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cómo se llamó la estrategia desarrollada durante la pandemia en 2020 realizada por las cuatro organizaciones gremiales?",
+    "options": ["Ruta de Acción Fisioterapia Colombia COVID-19", "Fisioterapia Colombia en Acción frente al COVID-19", "Estrategia COVID-19 Fisioterapia Colombia", "Fisioterapia Colombia en Primera Línea"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cuál fue uno de los primeros grandes proyectos iniciados por COLFI entre 2012 y 2013?",
+    "options": ["Compra de la oficina", "Código de ética y bioética de fisioterapia", "Funciones públicas", "Conformación Regional"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Con qué organización compartió COLFI su primera oficina en 2015?",
+    "options": ["ACEFIT", "ASCOFI", "ASCOFAFI", "IETS"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué resolución otorgó inicialmente la delegación de funciones públicas a COLFI?",
+    "options": ["Resolución 3100 de 2015", "Resolución 2235 de 2015", "Resolución 0382 de 2015", "Resolución 365 de 2015"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cómo se nombró oficialmente en 2019 la alianza entre las organizaciones gremiales de fisioterapia?",
+    "options": ["Fisioterapia Colombia", "Alianza Fisioterapia", "Unidos por la Fisioterapia", "Red Nacional de Fisioterapia"],
+    "correctIndex": 0,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué ocurrió con el proyecto de ley radicado en 2021?",
+    "options": ["Fue sancionado", "Fue archivado en 2023", "Fue declarado inconstitucional", "Nunca se debatió"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "Durante la pandemia, ¿qué tipo de acompañamiento brindó COLFI a fisioterapeutas?",
+    "options": ["Financiero", "Psicológico exclusivamente", "Vivienda", "Jurídico y laboral"],
+    "correctIndex": 3,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cuál fue uno de los logros de incidencia política durante la pandemia?",
+    "options": ["Eliminación de impuestos", "Creación de universidades", "Aumento del Bono COVID-19 para fisioterapeutas", "Reducción de jornadas laborales"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué premio se creó en 2023 para reconocer la trayectoria profesional?",
+    "options": ["Premio Nancy Stella Landinez Parra", "Premio Excelencia Clínica", "Premio Fisioterapia Colombia", "Premio Mérito Profesional COLFI"],
+    "correctIndex": 0,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué proyecto fue aprobado por la Junta Directiva en 2024?",
+    "options": ["Hospital Nacional de Rehabilitación", "Centro de Desarrollo Profesional Continuo", "Universidad COLFI", "Fondo Nacional de Fisioterapia"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué ley establece las funciones públicas delegadas a los colegios profesionales de salud?",
+    "options": ["Ley 100 de 1993", "Ley 528 de 1999", "Ley 1164 de 2007", "Ley 30 de 1992"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cuál fue uno de los objetivos del proyecto de ley impulsado por COLFI?",
+    "options": ["Crear nuevas funciones para fisioterapia", "Crear tribunales de ética para fisioterapia", "Cambiar el nombre de la profesión", "Eliminar el servicio social obligatorio"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿En qué barrio se ubicó la oficina arrendada por COLFI en 2016?",
+    "options": ["Chapinero", "Cedritos", "Teusaquillo", "Nicolás de Federmán"],
+    "correctIndex": 3,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué entidad acompaña jurídicamente a COLFI desde 2018?",
+    "options": ["CORE", "L&Q", "ITER", "CENIPSA"],
+    "correctIndex": 0,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué resolución renovó la delegación de funciones públicas en 2025?",
+    "options": ["Resolución 365 de 2025", "Resolución 191 de 2025", "Resolución 266 de 2025", "Resolución 382 de 2025"],
+    "correctIndex": 0,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cuántos perfiles se definieron en el Catálogo de Cualificaciones de Fisioterapia en 2025?",
+    "options": ["10", "12", "15", "18"],
+    "correctIndex": 3,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué calificó la Contraloría como “eficiente” en 2025?",
+    "options": ["El Congreso Nacional de fisioterapia", "El sistema de control interno de COLFI", "La impresión de tarjetas profesionales", "La inscripción en el Rethus"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué evento académico se realizó en modalidad virtual en agosto de 2021?",
+    "options": ["Encuentro Latinoamericano de Fisioterapia", "Congreso Nacional de Rehabilitación", "XXVII Congreso Nacional de Fisioterapia", "Foro Nacional de Salud"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cuál fue una de las acciones de COLFI frente a la reforma laboral y la reforma a la salud en 2023?",
+    "options": ["Crear nuevos sindicatos", "Representar y defender el rol de los fisioterapeutas", "Eliminar las especializaciones clínicas", "Suspender el Congreso Nacional de Fisioterapia"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué tipo de espacios contempla el proyecto Centro de Desarrollo Profesional Continuo?",
+    "options": ["Laboratorio de movimiento, coworking y bienestar", "Coworking, networking y formación", "Centros deportivos, coworking y formación", "Prestación de servicios, coworking y networking"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué organización externa apoyó el proceso de planeación estratégica institucional en 2025?",
+    "options": ["ICONTEC", "CLAFK", "ASCOFI", "CORE"],
+    "correctIndex": 3,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué ocurrió el 3 de abril de 2025 con el proyecto de ley de fisioterapia?",
+    "options": ["Fue archivado", "Fue aprobado en segundo debate en plenaria del Senado", "Fue sancionado por presidencia", "Fue aprobado en primer debate en comisión sexta del Senado"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cuál es uno de los proyectos futuros para COLFI?",
+    "options": ["Construcción de una clínica privada", "Creación de un hospital universitario", "Construcción del Centro de Desarrollo Profesional Continuo", "Apertura de sedes internacionales"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué organización gremial apoyó a COLFI desde 2015 gracias a su trayectoria y reconocimiento nacional?",
+    "options": ["ACEFIT", "ASCOFI", "ASCOFAFI", "ASOFONO"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué tipo de grupos se realizaron entre 2012 y 2013 para construir el código de ética y bioética?",
+    "options": ["Mesas internacionales", "Encuestas virtuales", "Grupos focales regionales y nacionales", "Cabildos abiertos"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cuál fue una de las funciones públicas delegadas a COLFI?",
+    "options": ["Autorizar universidades", "Expedir permisos transitorios a fisioterapeutas extranjeros", "Convalidar títulos de fisioterapia", "Certificar la inscripción en el ReTHUS"],
+    "correctIndex": 1,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué herramienta de comunicación fortaleció al COLFI durante la pandemia?",
+    "options": ["Canal de YouTube y webinars", "Canal de televisión", "Revista impresa semanal", "Aplicación de domicilios"],
+    "correctIndex": 0,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Cuántas denuncias laborales acompañó COLFI durante la pandemia?",
+    "options": ["12", "20", "50", "34"],
+    "correctIndex": 3,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué ocurrió con el proyecto de ley radicado en septiembre de 2023?",
+    "options": ["Fue retirado inmediatamente", "Nunca llegó al Congreso", "Se convirtió en ley en 2024", "Fue la segunda radicación del proyecto"],
+    "correctIndex": 3,
+    "timeLimit": 20,
+    "points": 1000
+  },
+  {
+    "text": "¿Qué tipo de cualificaciones se identificaron dentro del catálogo desarrollado en 2025?",
+    "options": ["Técnicos y auxiliares", "Solo doctorados", "Perfil universitario, especializaciones y maestrías", "Cursos cortos exclusivamente"],
+    "correctIndex": 2,
+    "timeLimit": 20,
+    "points": 1000
+  }
+]

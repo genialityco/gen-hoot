@@ -1,7 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useSession } from '../../SessionContext';
 import { defaultQuestions } from '../../defaultQuestions';
+
+const JSON_TEMPLATE = [
+  {
+    text: '¿Cuál es la capital de Colombia?',
+    options: ['Bogotá', 'Medellín', 'Cali', 'Cartagena'],
+    correctIndex: 0,
+    timeLimit: 20,
+    points: 1000,
+  },
+  {
+    text: '¿Cuántos colores tiene el arcoíris?',
+    options: ['5', '6', '7', '8'],
+    correctIndex: 2,
+    timeLimit: 15,
+    points: 500,
+  },
+];
 
 const EMPTY_QUESTION = () => ({
   text: '',
@@ -21,6 +38,55 @@ export default function HostSetupScreen() {
   const [mode, setMode] = useState('manual');
   const [questions, setQuestions] = useState(defaultQuestions.map((q) => ({ ...q, options: [...q.options] })));
   const [expandedIdx, setExpandedIdx] = useState(null);
+  const [importError, setImportError] = useState(null);
+  const fileInputRef = useRef(null);
+
+  function downloadTemplate() {
+    const blob = new Blob([JSON.stringify(JSON_TEMPLATE, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'preguntas_plantilla.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function handleImportFile(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    e.target.value = '';
+    setImportError(null);
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      try {
+        const parsed = JSON.parse(ev.target.result);
+        if (!Array.isArray(parsed) || parsed.length === 0) {
+          setImportError('El archivo debe ser un arreglo JSON con al menos una pregunta.');
+          return;
+        }
+        const normalized = parsed.map((q, i) => {
+          if (!q.text || !Array.isArray(q.options) || q.options.length !== 4) {
+            throw new Error(`Pregunta ${i + 1}: debe tener "text" y "options" con exactamente 4 elementos.`);
+          }
+          return {
+            text: String(q.text),
+            options: q.options.map(String),
+            correctIndex: Number.isInteger(q.correctIndex) && q.correctIndex >= 0 && q.correctIndex <= 3
+              ? q.correctIndex
+              : 0,
+            timeLimit: q.timeLimit > 0 ? Number(q.timeLimit) : 20,
+            points: q.points > 0 ? Number(q.points) : 1000,
+          };
+        });
+        setQuestions(normalized);
+        setExpandedIdx(null);
+      } catch (err) {
+        setImportError(err.message || 'JSON inválido.');
+      }
+    };
+    reader.readAsText(file);
+  }
 
   const allValid = hostName.trim() && questions.length > 0 && questions.every(isValid);
 
@@ -139,14 +205,43 @@ export default function HostSetupScreen() {
         </div>
 
         {/* Questions */}
-        <div className="mb-4 flex items-center justify-between">
+        <div className="mb-4 flex items-center justify-between gap-2 flex-wrap">
           <h2 className="text-gray-200 font-semibold text-lg">
             Preguntas <span className="badge bg-purple-600 text-white ml-2">{questions.length}</span>
           </h2>
-          <button className="btn-secondary text-sm py-2 px-4" onClick={addQuestion}>
-            + Agregar pregunta
-          </button>
+          <div className="flex gap-2">
+            <button
+              className="btn-secondary text-sm py-2 px-3"
+              onClick={downloadTemplate}
+              title="Descargar plantilla JSON"
+            >
+              📥 Plantilla
+            </button>
+            <button
+              className="btn-secondary text-sm py-2 px-3"
+              onClick={() => fileInputRef.current?.click()}
+              title="Importar preguntas desde JSON"
+            >
+              📂 Importar JSON
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json,application/json"
+              className="hidden"
+              onChange={handleImportFile}
+            />
+            <button className="btn-secondary text-sm py-2 px-4" onClick={addQuestion}>
+              + Agregar
+            </button>
+          </div>
         </div>
+
+        {importError && (
+          <div className="bg-red-900/40 border border-red-500/50 rounded-lg p-3 mb-4 text-red-300 text-sm">
+            ⚠️ {importError}
+          </div>
+        )}
 
         <div className="space-y-3 mb-6">
           {questions.map((q, idx) => (

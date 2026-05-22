@@ -9,38 +9,41 @@ const AVATAR_COLORS = [
 
 export default function WaitingScreen() {
   const { sessionCode, players, playerId } = useSession();
+  const myPlayer = players.find((p) => p.id === playerId);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-6">
+    <div className="h-screen overflow-hidden flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
-        className="w-full max-w-md text-center"
+        className="w-full max-w-sm"
       >
-        {/* Spinner */}
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-          className="text-5xl mb-4 inline-block"
-        >
-          ⏳
-        </motion.div>
+        <div className="flex justify-center mb-4">
+          <img src="/LOGO_QQSM.png" alt="QQSM" className="h-24 w-auto object-contain" />
+        </div>
 
-        <h2 className="text-2xl font-bold text-white mb-1" style={{ fontFamily: 'var(--font-display)' }}>
-          Esperando al host...
-        </h2>
-        <p className="text-gray-400 text-sm mb-6">El quiz empezará en cualquier momento</p>
+        <div className="text-center mb-5">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            className="text-5xl inline-block"
+          >
+            ⏳
+          </motion.div>
+          <h2 className="text-2xl font-bold text-white mt-3" style={{ fontFamily: 'var(--font-display)' }}>
+            Esperando al host...
+          </h2>
+          <p className="text-gray-400 text-sm mt-1">El quiz empezará en cualquier momento</p>
+        </div>
 
-        <div className="glass-card p-5 mb-6">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-gray-300 font-medium">Sala</h3>
-            <span className="font-mono font-bold text-white tracking-widest animate-pulse-glow">
-              {sessionCode}
-            </span>
+        <div className="glass-card p-4">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-gray-400 text-sm">Sala</span>
+            <span className="font-mono font-bold text-white tracking-widest animate-pulse-glow">{sessionCode}</span>
           </div>
 
           <div className="flex items-center justify-between mb-4">
-            <span className="text-gray-400 text-sm">Jugadores conectados</span>
+            <span className="text-gray-400 text-sm">Jugadores</span>
             <span className="badge bg-purple-600 text-white">{players.length}</span>
           </div>
 
@@ -61,15 +64,18 @@ export default function WaitingScreen() {
             ))}
           </div>
 
-          {players.find((p) => p.id === playerId) && (
-            <p className="text-green-400 text-xs mt-3">
-              ✓ Estás en la sala como{' '}
-              <span className="font-bold">{players.find((p) => p.id === playerId)?.name}</span>
+          {myPlayer && (
+            <p className="text-green-400 text-xs mt-3 text-center">
+              ✓ Conectado como <span className="font-bold">{myPlayer.name}</span>
             </p>
           )}
         </div>
 
-        <div className="flex gap-1 justify-center">
+        <div className="flex justify-center mt-4 mb-2">
+          <img src="/LogoFondo_Transparente_Blanco.png" alt="Gen Hoot" className="h-16 w-auto object-contain opacity-80" />
+        </div>
+
+        <div className="flex gap-1 justify-center mt-3">
           {[0, 0.2, 0.4].map((d, i) => (
             <motion.div
               key={i}
