@@ -204,7 +204,7 @@ export default function QuestionScreen() {
     <div className="h-screen overflow-hidden p-3 flex flex-col landscape:flex-row gap-2 landscape:gap-3 relative">
 
       {/* Corner logos */}
-      <img src="/LOGO_QQSM.png" alt="QQSM" className="absolute top-2 left-2 h-12 w-auto object-contain opacity-90 pointer-events-none z-10" />
+      <img src="/LOGO_QQSM.png" alt="QQSM" className="absolute top-2 left-2 h-20 w-auto object-contain opacity-90 pointer-events-none z-10" />
       <img src="/LogoFondo_Transparente_Blanco.png" alt="Gen Hoot" className="absolute top-2 right-2 h-12 w-auto object-contain opacity-90 pointer-events-none z-10" />
 
       {/* ── Section A: timer + lifelines + question ── */}

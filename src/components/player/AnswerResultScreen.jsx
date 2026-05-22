@@ -142,7 +142,7 @@ export default function AnswerResultScreen() {
     <div className="h-screen overflow-hidden flex flex-col p-4 gap-3">
       {/* Header: logos */}
       <div className="flex items-center justify-between flex-shrink-0">
-        <img src="/LOGO_QQSM.png" alt="QQSM" className="h-12 w-auto object-contain" />
+        <img src="/LOGO_QQSM.png" alt="QQSM" className="h-20 w-auto object-contain" />
         <img src="/LogoFondo_Transparente_Blanco.png" alt="Gen Hoot" className="h-12 w-auto object-contain" />
       </div>
 
