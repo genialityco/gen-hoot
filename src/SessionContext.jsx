@@ -3,7 +3,7 @@ import {
   createSession, registerPlayer, updatePlayerConnection,
   subscribeToSession, updateQuestions, deleteSession,
   startQuiz, showQuestionResults, showLeaderboard, nextQuestion, finishQuiz, resetSession,
-  submitAnswer,
+  submitAnswer, activateLifeline, getAudienceAnswers,
 } from './firebase';
 
 const SessionContext = createContext(null);
@@ -80,6 +80,7 @@ export function SessionProvider({ children }) {
     : [];
   const leaderboard = [...players].sort((a, b) => (b.score || 0) - (a.score || 0));
   const myAnswer = sessionState?.answers?.[currentQuestionIndex]?.[playerId] || null;
+  const myLifelines = sessionState?.players?.[playerId]?.lifelinesUsed ?? {};
   const myScore = sessionState?.players?.[playerId]?.score ?? 0;
   const myRank = leaderboard.findIndex((p) => p.id === playerId) + 1;
   const totalAnswers = sessionState?.answers?.[currentQuestionIndex]
@@ -168,6 +169,17 @@ export function SessionProvider({ children }) {
     catch (e) { setError(e.message); }
   }, [sessionCode, playerId]);
 
+  const handleActivateLifeline = useCallback(async (lifelineName, data = true) => {
+    if (!sessionCode || !playerId) return;
+    try { await activateLifeline(sessionCode, playerId, lifelineName, data); }
+    catch (e) { setError(e.message); }
+  }, [sessionCode, playerId]);
+
+  const handleGetAudienceAnswers = useCallback(async (questionIndex, optionCount) => {
+    if (!sessionCode) return Array(optionCount).fill(0);
+    return getAudienceAnswers(sessionCode, questionIndex, optionCount);
+  }, [sessionCode]);
+
   const handleCancelSession = useCallback(async () => {
     const code = sessionCode;
     Object.values(STORAGE_KEYS).forEach((k) => sessionStorage.removeItem(k));
@@ -199,7 +211,7 @@ export function SessionProvider({ children }) {
     sessionState,
     // Derived
     phase, sessionMode, currentQuestionIndex, questions, currentQuestion,
-    players, leaderboard, myAnswer, myScore, myRank, totalAnswers,
+    players, leaderboard, myAnswer, myLifelines, myScore, myRank, totalAnswers,
     // Status
     error, loading, setError,
     // Actions
@@ -213,6 +225,8 @@ export function SessionProvider({ children }) {
     finishQuiz: handleFinishQuiz,
     resetSession: handleResetSession,
     submitAnswer: handleSubmitAnswer,
+    activateLifeline: handleActivateLifeline,
+    getAudienceAnswers: handleGetAudienceAnswers,
     cancelSession: handleCancelSession,
     leaveSession: handleLeaveSession,
   };

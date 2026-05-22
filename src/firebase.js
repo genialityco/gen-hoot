@@ -155,9 +155,28 @@ export async function resetSession(code) {
   const playerIds = Object.keys(session.players || {});
   playerIds.forEach((pid) => {
     updates[`players/${pid}/score`] = 0;
+    updates[`players/${pid}/lifelinesUsed`] = null;
   });
 
   await update(ref(db, `sessions/${code}`), updates);
+}
+
+// ── Lifelines ─────────────────────────────────────────────────────────────────
+
+export async function activateLifeline(code, playerId, lifelineName, data = true) {
+  await update(ref(db, `sessions/${code}/players/${playerId}/lifelinesUsed`), {
+    [lifelineName]: data,
+  });
+}
+
+export async function getAudienceAnswers(code, questionIndex, optionCount) {
+  const snap = await get(ref(db, `sessions/${code}/answers/${questionIndex}`));
+  const answers = snap.val() || {};
+  const counts = Array(optionCount).fill(0);
+  Object.values(answers).forEach(({ answerIndex }) => {
+    if (answerIndex >= 0 && answerIndex < optionCount) counts[answerIndex]++;
+  });
+  return counts;
 }
 
 // ── Player answer ─────────────────────────────────────────────────────────────

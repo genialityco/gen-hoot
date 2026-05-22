@@ -5,24 +5,28 @@ import { useSession } from '../../SessionContext';
 const OPTION_LABELS = ['A', 'B', 'C', 'D'];
 const OPTION_CLASSES = ['answer-btn-a', 'answer-btn-b', 'answer-btn-c', 'answer-btn-d'];
 const OPTION_ICONS = ['🔴', '🔵', '🟡', '🟢'];
+const OPTION_BAR_COLORS = ['bg-red-500', 'bg-blue-500', 'bg-amber-500', 'bg-green-500'];
 
 const CIRCUMFERENCE = 2 * Math.PI * 36;
 
 export default function QuestionScreen() {
   const {
     sessionState, currentQuestion, currentQuestionIndex,
-    questions, submitAnswer, myAnswer,
+    questions, submitAnswer, myAnswer, myLifelines,
+    activateLifeline, getAudienceAnswers,
   } = useSession();
 
   const [timeLeft, setTimeLeft] = useState(currentQuestion?.timeLimit || 20);
   const [timesUp, setTimesUp] = useState(false);
+  const [audienceData, setAudienceData] = useState(null);
+  const [loadingAudience, setLoadingAudience] = useState(false);
   const timerRef = useRef(null);
 
   useEffect(() => {
     if (!currentQuestion || !sessionState?.questionStartedAt) return;
     const startedAt = sessionState.questionStartedAt;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setTimesUp(false);
+    setAudienceData(null);
 
     timerRef.current = setInterval(() => {
       const elapsed = (Date.now() - startedAt) / 1000;
@@ -47,10 +51,45 @@ export default function QuestionScreen() {
   const hasAnswered = myAnswer !== null;
   const isLocked = hasAnswered || timesUp;
 
+  // 50/50: stored as { qIndex, hidden[] } so hidden options only apply to the question they were used on
+  const fiftyFiftyData = myLifelines?.fiftyFifty;
+  const hiddenOptions = fiftyFiftyData?.qIndex === currentQuestionIndex && Array.isArray(fiftyFiftyData?.hidden)
+    ? new Set(fiftyFiftyData.hidden)
+    : new Set();
+  const fiftyFiftyUsed = !!fiftyFiftyData;
+  const askAudienceUsed = !!myLifelines?.askAudience;
+
   function handleAnswer(idx) {
-    if (isLocked) return;
+    if (isLocked || hiddenOptions.has(idx)) return;
     submitAnswer(currentQuestionIndex, idx);
   }
+
+  async function handleFiftyFifty() {
+    if (fiftyFiftyUsed || isLocked) return;
+    const { correctIndex, options } = currentQuestion;
+    const wrongIndices = options.map((_, i) => i).filter((i) => i !== correctIndex);
+    for (let i = wrongIndices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [wrongIndices[i], wrongIndices[j]] = [wrongIndices[j], wrongIndices[i]];
+    }
+    // Keep 1 wrong visible, hide the rest
+    const toHide = wrongIndices.slice(0, wrongIndices.length - 1);
+    await activateLifeline('fiftyFifty', { qIndex: currentQuestionIndex, hidden: toHide });
+  }
+
+  async function handleAskAudience() {
+    if (askAudienceUsed || isLocked || loadingAudience) return;
+    setLoadingAudience(true);
+    try {
+      const counts = await getAudienceAnswers(currentQuestionIndex, currentQuestion.options.length);
+      setAudienceData(counts);
+      await activateLifeline('askAudience');
+    } finally {
+      setLoadingAudience(false);
+    }
+  }
+
+  const totalVotes = audienceData ? audienceData.reduce((a, b) => a + b, 0) : 0;
 
   return (
     <div className="min-h-screen flex flex-col p-4 max-w-lg mx-auto">
@@ -75,6 +114,70 @@ export default function QuestionScreen() {
         </div>
       </div>
 
+      {/* Lifelines */}
+      {!isLocked && (
+        <div className="flex gap-2 mb-4">
+          <button
+            onClick={handleFiftyFifty}
+            disabled={fiftyFiftyUsed}
+            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all
+              ${fiftyFiftyUsed
+                ? 'bg-white/10 text-gray-500 cursor-not-allowed'
+                : 'bg-amber-500/20 border border-amber-500/50 text-amber-400 hover:bg-amber-500/30 active:scale-95'
+              }`}
+          >
+            50/50
+          </button>
+          <button
+            onClick={handleAskAudience}
+            disabled={askAudienceUsed || loadingAudience}
+            className={`flex-1 py-2 rounded-xl text-sm font-bold transition-all
+              ${askAudienceUsed
+                ? 'bg-white/10 text-gray-500 cursor-not-allowed'
+                : 'bg-purple-500/20 border border-purple-500/50 text-purple-400 hover:bg-purple-500/30 active:scale-95'
+              }`}
+          >
+            {loadingAudience ? '...' : '👥 Público'}
+          </button>
+        </div>
+      )}
+
+      {/* Audience results */}
+      <AnimatePresence>
+        {audienceData && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="glass-card p-4 mb-4 overflow-hidden"
+          >
+            <p className="text-gray-400 text-xs uppercase tracking-widest mb-3 text-center">
+              Así votó el público
+            </p>
+            <div className="space-y-2">
+              {currentQuestion.options.map((_, idx) => {
+                if (hiddenOptions.has(idx)) return null;
+                const pct = totalVotes > 0 ? Math.round((audienceData[idx] / totalVotes) * 100) : 0;
+                return (
+                  <div key={idx} className="flex items-center gap-2">
+                    <span className="text-xs text-gray-400 w-4">{OPTION_LABELS[idx]}</span>
+                    <div className="flex-1 bg-white/10 rounded-full h-5 overflow-hidden">
+                      <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: `${pct}%` }}
+                        transition={{ duration: 0.5, delay: idx * 0.1 }}
+                        className={`h-full rounded-full ${OPTION_BAR_COLORS[idx]}`}
+                      />
+                    </div>
+                    <span className="text-xs text-gray-300 w-8 text-right">{pct}%</span>
+                  </div>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Question */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -93,8 +196,13 @@ export default function QuestionScreen() {
       {/* Answer buttons */}
       <div className="grid grid-cols-2 gap-3 flex-1">
         {currentQuestion.options.map((option, idx) => {
+          const hidden = hiddenOptions.has(idx);
           const selected = hasAnswered && myAnswer.answerIndex === idx;
           const dimmed = hasAnswered && !selected;
+
+          if (hidden) {
+            return <div key={idx} className="rounded-2xl bg-white/5 opacity-20 min-h-20" />;
+          }
 
           return (
             <motion.button
