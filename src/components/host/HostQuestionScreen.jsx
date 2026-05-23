@@ -21,6 +21,11 @@ export default function HostQuestionScreen() {
   const isAuto = sessionMode === 'auto';
 
   useEffect(() => {
+    const audio = new Audio('/preguntanueva.mp3');
+    audio.play().catch(() => {});
+  }, []);
+
+  useEffect(() => {
     if (!currentQuestion || !sessionState?.questionStartedAt) return;
     startedAtRef.current = sessionState.questionStartedAt;
 
