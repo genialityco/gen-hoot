@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { SessionProvider, useSession } from './SessionContext';
@@ -26,6 +26,23 @@ const pageVariants = {
 
 function HostRouter() {
   const { sessionCode, phase } = useSession();
+  const bgMusicRef = useRef(null);
+
+  useEffect(() => {
+    const activePhases = ['showing-question', 'question-results', 'leaderboard'];
+    if (activePhases.includes(phase)) {
+      if (!bgMusicRef.current) {
+        bgMusicRef.current = new Audio('/backgroundloop.mp3');
+        bgMusicRef.current.loop = true;
+        bgMusicRef.current.play().catch(() => {});
+      }
+    } else {
+      if (bgMusicRef.current) {
+        bgMusicRef.current.pause();
+        bgMusicRef.current = null;
+      }
+    }
+  }, [phase]);
 
   let screenKey;
   let Screen;

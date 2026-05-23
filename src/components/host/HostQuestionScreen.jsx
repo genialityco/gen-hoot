@@ -19,11 +19,24 @@ export default function HostQuestionScreen() {
   const autoRef = useRef(null);
   const startedAtRef = useRef(sessionState?.questionStartedAt);
   const isAuto = sessionMode === 'auto';
+  const tickingRef = useRef(null);
 
   useEffect(() => {
     const audio = new Audio('/preguntanueva.mp3');
     audio.play().catch(() => {});
   }, []);
+
+  useEffect(() => {
+    const threshold = Math.ceil((currentQuestion?.timeLimit || 20) * 0.25);
+    if (timeLeft <= threshold && timeLeft > 0 && !tickingRef.current) {
+      tickingRef.current = new Audio('/tickingclock.mp3');
+      tickingRef.current.play().catch(() => {});
+    }
+    if (timeLeft <= 0 && tickingRef.current) {
+      tickingRef.current.pause();
+      tickingRef.current = null;
+    }
+  }, [timeLeft, currentQuestion?.timeLimit]);
 
   useEffect(() => {
     if (!currentQuestion || !sessionState?.questionStartedAt) return;
